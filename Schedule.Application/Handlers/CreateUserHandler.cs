@@ -1,4 +1,5 @@
-﻿using Schedule.Application.DTOs;
+﻿using Microsoft.AspNetCore.Identity;
+using Schedule.Application.DTOs;
 using Schedule.Domain.Entities;
 using Schedule.Domain.Interfaces;
 
@@ -7,10 +8,12 @@ namespace Schedule.Application.Handlers
     public class CreateUserHandler
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPasswordHasher<UserAccount> _passwordHasher;
 
         public CreateUserHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            _passwordHasher = new PasswordHasher<UserAccount>(); // Injetável se quiser
         }
 
         public async Task<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
@@ -39,6 +42,7 @@ namespace Schedule.Application.Handlers
                 request.MaritalStatus
             );
 
+            user.SetPassword(request.Password, _passwordHasher);
             await _userRepository.AddAsync(user, cancellationToken);
 
             return new CreateUserResponse
