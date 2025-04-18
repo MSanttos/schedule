@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Schedule.Application.DTOs;
 using Schedule.Application.Handlers;
-using Schedule.Infrastructure.Persistence; // <-- certifique-se de que este namespace está correto
 
 namespace Schedule.API.Controllers
 {
@@ -106,6 +105,7 @@ namespace Schedule.API.Controllers
             }
         }
 
-
+        // PUT: api/user-account/update/{id}
+        
     }
 }
