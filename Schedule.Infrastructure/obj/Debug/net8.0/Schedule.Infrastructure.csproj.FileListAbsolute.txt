@@ -1,0 +1,17 @@
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\bin\Debug\net8.0\Schedule.Infrastructure.deps.json
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\bin\Debug\net8.0\Schedule.Infrastructure.dll
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\bin\Debug\net8.0\Schedule.Infrastructure.pdb
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\Schedule.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\Schedule.Infrastructure.AssemblyInfoInputs.cache
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\Schedule.Infrastructure.AssemblyInfo.cs
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\Schedule.Infrastructure.csproj.CoreCompileInputs.cache
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\Schedule.Infrastructure.dll
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\refint\Schedule.Infrastructure.dll
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\Schedule.Infrastructure.pdb
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\ref\Schedule.Infrastructure.dll
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\Schedule.Infrastructure.csproj.AssemblyReference.cache
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\bin\Debug\net8.0\Schedule.Infrastructure.runtimeconfig.json
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\Schedule.Infrastructure.genruntimeconfig.cache
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\bin\Debug\net8.0\Schedule.Domain.dll
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\bin\Debug\net8.0\Schedule.Domain.pdb
+C:\www\02-Estudos\Schedule\Schedule.Infrastructure\obj\Debug\net8.0\Schedule.6918ED7E.Up2Date

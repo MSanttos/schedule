@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+<ItemGroup>
+  <Folder Include="Interfaces\" />
+  <Folder Include="UseCases\" />
+  <Folder Include="Services\" />
+  <Folder Include="Mappings\" />
+  <Folder Include="Validators\" />
+</ItemGroup>
+
+<ItemGroup>
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.4" />
+  <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.4" />
+  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.4" />
+</ItemGroup>
+
+<ItemGroup>
+  <ProjectReference Include="..\Schedule.Domain\Schedule.Domain.csproj" />
+</ItemGroup>
+</Project>
