@@ -1,1 +1,16 @@
-.vs/
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.sourcelink.json
+
+# User-specific files
+*.user
+*.suo
+
+# Others
+*.log
+*.vs/
