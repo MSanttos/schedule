@@ -1,0 +1,42 @@
+@Schedule.API_HostAddress = https://localhost:5001/
+
+GET {{Schedule.API_HostAddress}}api/user-account/getAll
+Accept: application/json
+
+###
+
+POST {{Schedule.API_HostAddress}}api/user-account/create
+Accept: application/json
+Content-Type: application/json
+{
+  "name": "Juliana Oliveira",
+  "email": "juliana.oliveira@example.com",
+  "password": "SenhaForte456!",
+  "birthDate": "1985-11-22T09:30:00.000Z",
+  "nationality": "Brasileira",
+  "naturalness": "Rio de Janeiro",
+  "cpf": "987.654.321-00",
+  "rg": "45.678.910-1",
+  "phone": "(21) 3456-7890",
+  "cellPhone": "(21) 98876-5432",
+  "zipCode": "20000-000",
+  "address": "Avenida Atlântica",
+  "number": "1500",
+  "complement": "Cobertura 501",
+  "neighborhood": "Copacabana",
+  "city": "Rio de Janeiro",
+  "state": "RJ",
+  "gender": 2,
+  "maritalStatus": 2,
+  "CreatedBy": "admin"
+}
+
+###
+
+DELETE {{Schedule.API_HostAddress}}api/user-account/delete/{id}
+Accept: application/json
+
+###
+
+GET {{Schedule.API_HostAddress}}api/user-account/getById/050b038b-eaa2-402e-abb1-10df3906e52c
+Accept: application/json

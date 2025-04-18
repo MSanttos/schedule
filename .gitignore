@@ -1,0 +1,32 @@
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.sourcelink.json
+
+# User-specific files
+*.user
+*.suo
+
+# Others
+*.log
+*.vs/
+bin/
+obj/
+*.deps.json
+*.pdb
+*.exe
+*.dll
+/Schedule.API/bin/
+/Schedule.API/obj/
+/Schedule.Application/bin/
+/Schedule.Application/obj/
+/Schedule.Domain/bin/
+/Schedule.Domain/obj/
+/Schedule.Infrastructure/bin/
+/Schedule.Infrastructure/obj/
+/Schedule.Shared/bin/
+/Schedule.Shared/obj/
