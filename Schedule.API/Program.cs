@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Schedule.Application.Handlers;
+using Schedule.Domain.Entities;
 using Schedule.Domain.Interfaces;
+using Schedule.Infrastructure.Persistence;
 using Schedule.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +14,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Configuração de dependências
 builder.Services.AddScoped<IUserRepository, UserRepository>();  // Registro do repositório de usuários
+builder.Services.AddScoped<IPasswordHasher<UserAccount>, PasswordHasher<UserAccount>>();
 builder.Services.AddScoped<CreateUserHandler>();  // Registro do handler para criar usuário
+builder.Services.AddScoped<UpdateUserHandler>();  // Update
 
 // Configuração de controllers, documentação e outros serviços
 builder.Services.AddControllers();

@@ -1,6 +1,6 @@
 ﻿using Schedule.Domain.Enums;
 
-namespace Schedule.Application.DTOs
+namespace Schedule.Application.DTOs.Request
 {
     public class CreateUserRequest
     {

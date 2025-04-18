@@ -23,5 +23,6 @@
 
 <ItemGroup>
   <ProjectReference Include="..\Schedule.Domain\Schedule.Domain.csproj" />
+  <ProjectReference Include="..\Schedule.Infrastructure\Schedule.Infrastructure.csproj" />
 </ItemGroup>
 </Project>

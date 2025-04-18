@@ -2,48 +2,51 @@
 using Microsoft.Extensions.Logging;
 using Schedule.Domain.Entities;
 
-public class AppDbContext : DbContext
+namespace Schedule.Infrastructure.Persistence
 {
-    private readonly ILogger<AppDbContext>? _logger;
-
-    public DbSet<UserAccount> UserAccounts { get; set; }
-
-    // ✔️ Construtor com logger - usado em tempo de execução
-    public AppDbContext(DbContextOptions<AppDbContext> options, ILogger<AppDbContext> logger)
-        : base(options)
+    public class AppDbContext : DbContext
     {
-        _logger = logger;
+        private readonly ILogger<AppDbContext>? _logger;
 
-        try
+        public DbSet<UserAccount> UserAccounts { get; set; }
+
+        // ✔️ Construtor com logger - usado em tempo de execução
+        public AppDbContext(DbContextOptions<AppDbContext> options, ILogger<AppDbContext> logger)
+            : base(options)
         {
-            if (this.Database.CanConnect())
+            _logger = logger;
+
+            try
             {
-                var connectionString = this.Database.GetDbConnection().ConnectionString;
-                _logger.LogInformation("✅ Conexão com o banco bem-sucedida.");
-                _logger.LogInformation("🔗 String de conexão: {ConnectionString}", connectionString);
+                if (this.Database.CanConnect())
+                {
+                    var connectionString = this.Database.GetDbConnection().ConnectionString;
+                    _logger.LogInformation("✅ Conexão com o banco bem-sucedida.");
+                    _logger.LogInformation("🔗 String de conexão: {ConnectionString}", connectionString);
+                }
+                else
+                {
+                    _logger.LogWarning("❌ Falha na conexão com o banco.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _logger.LogWarning("❌ Falha na conexão com o banco.");
+                _logger.LogError(ex, "🚨 Erro ao tentar conectar ao banco de dados.");
             }
         }
-        catch (Exception ex)
+
+        // ✔️ Construtor sem logger - usado em tempo de design (ef migrations)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
         {
-            _logger.LogError(ex, "🚨 Erro ao tentar conectar ao banco de dados.");
         }
-    }
 
-    // ✔️ Construtor sem logger - usado em tempo de design (ef migrations)
-    public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
-    {
-    }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<UserAccount>().ToTable("UserAccounts");
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+            modelBuilder.Entity<UserAccount>().ToTable("UserAccounts");
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        }
     }
 }
