@@ -1,5 +1,5 @@
-﻿using Schedule.Domain.Enums;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Schedule.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Schedule.Domain.Entities
