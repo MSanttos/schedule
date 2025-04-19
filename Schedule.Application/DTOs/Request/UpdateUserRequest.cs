@@ -7,7 +7,7 @@ namespace Schedule.Application.DTOs.Request
         public Guid Id { get; set; }  // Adicionando o ID que é necessário para updates
         public string Name { get; set; }
         public string Email { get; set; }
-        public string? PasswordHash { get; set; } // Lembre-se de fazer o hash da senha aqui
+        public string? Password { get; set; } // Lembre-se de fazer o hash da senha aqui
         public DateTime BirthDate { get; set; }
         public string Nationality { get; set; }
         public string Naturalness { get; set; }

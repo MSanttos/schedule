@@ -151,11 +151,6 @@ namespace Schedule.API.Controllers
                     User = new
                     {
                         result.Id,
-                        result.Name,
-                        result.Email,
-                        result.PhoneNumber,
-                        result.City,
-                        result.State
                     }
                 });
             }

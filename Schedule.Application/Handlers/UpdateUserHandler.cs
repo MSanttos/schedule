@@ -35,13 +35,13 @@ namespace Schedule.Application.Handlers
     if (request.Email != null) SetProperty(user, "Email", request.Email);
 
             // Atualiza senha apenas se fornecida (e não vazia)
-            if (request.PasswordHash != null) // Verifica se o campo foi enviado (null vs string vazia)
+            if (request.Password != null) // Verifica se o campo foi enviado (null vs string vazia)
             {
-                if (string.IsNullOrWhiteSpace(request.PasswordHash))
+                if (string.IsNullOrWhiteSpace(request.Password))
                 {
                     throw new ArgumentException("Password cannot be empty");
                 }
-                user.SetPassword(request.PasswordHash, _passwordHasher);
+                user.SetPassword(request.Password, _passwordHasher);
             }
 
             // Atualiza demais propriedades
@@ -56,6 +56,7 @@ namespace Schedule.Application.Handlers
             SetPropertyIfNotNull(user, "Country", request.Naturalness);
             SetPropertyIfNotNull(user, "MaritalStatus", request.MaritalStatus);
             SetPropertyIfNotNull(user, "Gender", request.Gender);
+            SetPropertyIfNotNull(user, "Password", request.Password);
 
             // Atualiza metadados
             SetProperty(user, "UpdatedAt", DateTime.UtcNow);
