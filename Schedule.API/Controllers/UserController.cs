@@ -84,7 +84,7 @@ namespace Schedule.API.Controllers
 
         // GET: api/user-account/getById{id}
         [HttpGet("getById/{id}")]
-        public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
+        public async Task<ActionResult<CreateUserAccountResponse>> GetUserById(Guid id, CancellationToken cancellationToken)
         {
             try
             {
@@ -93,10 +93,28 @@ namespace Schedule.API.Controllers
 
                 if (user == null)
                 {
-                    return NotFound(new { message = "User not found" });
+                    throw new KeyNotFoundException($"User with ID {id} not found");
                 }
 
-                return Ok(user); // Retorna o usuário encontrado
+                var userResponse = new CreateUserAccountResponse
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    BirthDate = user.BirthDate ?? DateTime.MinValue,
+                    Nationality = user.Nationality,
+                    CPF = user.TaxId,
+                    StreetAddress = user.StreetAddress,
+                    City = user.City,
+                    State = user.State,
+                    PostalCode = user.PostalCode,
+                    Country = user.Country,
+                    Gender = user.Gender.HasValue ? (int)user.Gender : 99,
+                    MaritalStatus = user.MaritalStatus.HasValue ? (int)user.MaritalStatus : 99,
+                };
+
+                return Ok(userResponse); // Retorna o DTO com status 200
             }
             catch (Exception ex)
             {
