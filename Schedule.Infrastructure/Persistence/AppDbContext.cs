@@ -9,6 +9,7 @@ namespace Schedule.Infrastructure.Persistence
         private readonly ILogger<AppDbContext>? _logger;
 
         public DbSet<UserAccount> UserAccounts { get; set; }
+        public DbSet<Schedulers> Schedulers { get; set; }
 
         // ✔️ Construtor com logger - usado em tempo de execução
         public AppDbContext(DbContextOptions<AppDbContext> options, ILogger<AppDbContext> logger)
@@ -46,6 +47,7 @@ namespace Schedule.Infrastructure.Persistence
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<UserAccount>().ToTable("UserAccounts");
+            modelBuilder.Entity<Schedulers>().ToTable("Schedulers");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
     }

@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Schedule.Application.DTOs.Request;
 using Schedule.Application.DTOs.Response;
 using Schedule.Application.Handlers;
 using Schedule.Infrastructure.Persistence;
-using Serilog.Core;
 
 namespace Schedule.API.Controllers
 {
@@ -62,7 +60,8 @@ namespace Schedule.API.Controllers
                         MaritalStatus = u.MaritalStatus.HasValue ? (int)u.MaritalStatus : 99,
                         City = u.City,
                         State = u.State,
-                        PostalCode = u.PostalCode
+                        PostalCode = u.PostalCode,
+                        Nationality = u.Nationality
                     })
                     .ToListAsync(cancellationToken);
 
