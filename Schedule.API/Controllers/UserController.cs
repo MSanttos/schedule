@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Schedule.Application.DTOs;
+using Schedule.Application.DTOs.Request;
+using Schedule.Application.DTOs.Response;
 using Schedule.Application.Handlers;
+using Schedule.Infrastructure.Persistence;
 
 namespace Schedule.API.Controllers
 {
@@ -11,11 +13,13 @@ namespace Schedule.API.Controllers
     {
         private readonly CreateUserHandler _handler;
         private readonly AppDbContext _context; // <-- Adiciona o EFContext
+        private readonly UpdateUserHandler _updateHandler;
 
-        public UserController(CreateUserHandler handler, AppDbContext context) // <-- Injeta o EFContext
+        public UserController(CreateUserHandler handler, UpdateUserHandler updateHandler, AppDbContext context) // <-- Injeta o EFContext
         {
             _handler = handler;
             _context = context;
+            _updateHandler = updateHandler;
         }
 
         [HttpPost("create")]
@@ -43,23 +47,43 @@ namespace Schedule.API.Controllers
         {
             try
             {
-                var users = await _context.UserAccounts.ToListAsync(cancellationToken);
+                // Recupera os usuários do banco
+                var users = await _context.UserAccounts
+                    .Select(u => new UserResponseDto
+                    {
+                        Id = u.Id,
+                        Name = u.Name,
+                        Email = u.Email,
+                        PhoneNumber = u.PhoneNumber,
+                        BirthDate = u.BirthDate ?? DateTime.MinValue,
+                        Gender = u.Gender.HasValue ? (int)u.Gender : 99,
+                        MaritalStatus = u.MaritalStatus.HasValue ? (int)u.MaritalStatus : 99,
+                        City = u.City,
+                        State = u.State,
+                        PostalCode = u.PostalCode,
+                        Nationality = u.Nationality
+                    })
+                    .ToListAsync(cancellationToken);
+
+                // Se não houver usuários, retorna 404
                 if (users == null || !users.Any())
                 {
                     return NotFound(new { message = "No users found" });
                 }
 
-                return Ok(users); // Retorna a lista de usuários
+                // Retorna a lista de usuários no formato DTO
+                return Ok(users);
             }
             catch (Exception ex)
             {
+                // Em caso de erro, retorna 500
                 return StatusCode(500, new { error = ex.Message });
             }
         }
 
         // GET: api/user-account/getById{id}
         [HttpGet("getById/{id}")]
-        public async Task<IActionResult> GetUserById(Guid id, CancellationToken cancellationToken)
+        public async Task<ActionResult<CreateUserAccountResponse>> GetUserById(Guid id, CancellationToken cancellationToken)
         {
             try
             {
@@ -68,10 +92,28 @@ namespace Schedule.API.Controllers
 
                 if (user == null)
                 {
-                    return NotFound(new { message = "User not found" });
+                    throw new KeyNotFoundException($"User with ID {id} not found");
                 }
 
-                return Ok(user); // Retorna o usuário encontrado
+                var userResponse = new CreateUserAccountResponse
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    BirthDate = user.BirthDate ?? DateTime.MinValue,
+                    Nationality = user.Nationality,
+                    CPF = user.TaxId,
+                    StreetAddress = user.StreetAddress,
+                    City = user.City,
+                    State = user.State,
+                    PostalCode = user.PostalCode,
+                    Country = user.Country,
+                    Gender = user.Gender.HasValue ? (int)user.Gender : 99,
+                    MaritalStatus = user.MaritalStatus.HasValue ? (int)user.MaritalStatus : 99,
+                };
+
+                return Ok(userResponse); // Retorna o DTO com status 200
             }
             catch (Exception ex)
             {
@@ -105,7 +147,39 @@ namespace Schedule.API.Controllers
             }
         }
 
-        // PUT: api/user-account/update/{id}
-        
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
+        {
+            ModelState.Remove("PasswordHash");
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Atribui o ID da rota ao request
+            request.Id = id;
+
+            try
+            {
+                var result = await _updateHandler.Handle(request, cancellationToken);
+
+                return Ok(new
+                {
+                    Message = "Usuário atualizado com sucesso",
+                    User = new
+                    {
+                        result.Id,
+                    }
+                });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno: {ex.Message}");
+            }
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Schedule.Domain.Entities;
 using Schedule.Domain.Interfaces;
+using Schedule.Infrastructure.Persistence;
 
 namespace Schedule.Infrastructure.Repositories
 {

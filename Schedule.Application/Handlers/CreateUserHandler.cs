@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Schedule.Application.DTOs;
+using Schedule.Application.DTOs.Request;
 using Schedule.Domain.Entities;
 using Schedule.Domain.Interfaces;
 
