@@ -30,7 +30,7 @@ jobs:
   deploy-dev:
     name: Deploy Desenvolvimento
     runs-on: ubuntu-latest
-    enviroment: dev
+    environment: dev
     needs: [build]
     steps:
     
