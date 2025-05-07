@@ -9,7 +9,7 @@
         public TimeSpan Time { get; set; }
         public TimeSpan Duration { get; set; }
         public string? Notes { get; set; }  // Nullable
-        public string Status { get; set; } = "pending";  // Valor padrão
+        public string Status { get; set; } = "confirmed";  // Valor padrão
         public decimal Price { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }  // Nullable
