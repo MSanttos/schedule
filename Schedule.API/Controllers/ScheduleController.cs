@@ -76,5 +76,45 @@ namespace Schedule.API.Controllers
                 });
             }
         }
+
+        [HttpGet("getScheduleById/{id}")]
+        public async Task<IActionResult> GetScheduleById(Guid id, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var schedule = await _context.Schedulers
+                    .Where(s => s.Id == id)
+                    .Select(s => new
+                    {
+                        s.Id,
+                        s.ClientId,
+                        ClientName = s.ClientName ?? "Cliente não informado",
+                        s.ServiceId,
+                        ServiceName = s.ServiceName ?? "Serviço não informado",
+                        Date = s.Date.ToString("yyyy-MM-dd"),
+                        Time = s.Time.ToString(@"hh\:mm"),
+                        Duration = s.Duration.ToString(@"hh\:mm"),
+                        Notes = s.Notes ?? string.Empty,
+                        Status = s.Status ?? "pending",
+                        Price = s.Price,
+                        CreatedAt = s.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss"),
+                        UpdatedAt = s.UpdatedAt.HasValue ?
+                            s.UpdatedAt.Value.ToString("yyyy-MM-dd HH:mm:ss") : null,
+                        CreatedBy = s.CreatedBy ?? "Sistema",
+                        UpdatedBy = s.UpdatedBy
+                    })
+                    .FirstOrDefaultAsync(cancellationToken);
+                return schedule != null ? Ok(schedule) : NotFound("Agendamento não encontrado.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    error = "Erro ao buscar agendamento",
+                    details = ex.Message,
+                    inner = ex.InnerException?.Message
+                });
+            }
+        }
     }
 }
